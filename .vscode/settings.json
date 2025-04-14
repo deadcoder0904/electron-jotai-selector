@@ -1,0 +1,10 @@
+{
+	"deno.enablePaths": ["./deno.jsonc"],
+	"deno.lint": false,
+	"deno.unstable": ["--unstable"],
+	"deno.config": "./deno.jsonc",
+	"editor.formatOnSave": true,
+	"[typescript]": {
+		"editor.defaultFormatter": "denoland.vscode-deno"
+	}
+}

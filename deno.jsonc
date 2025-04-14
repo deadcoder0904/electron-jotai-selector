@@ -1,0 +1,11 @@
+// deno.jsonc
+{
+	"fmt": {
+		"useTabs": true,
+		"indentWidth": 2,
+		"semiColons": false,
+		"singleQuote": true,
+		"lineWidth": 80,
+		"proseWrap": "always"
+	}
+}
