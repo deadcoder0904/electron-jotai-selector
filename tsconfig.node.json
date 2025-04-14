@@ -4,7 +4,7 @@
 		"electron.vite.config.*",
 		"src/main/**/*",
 		"src/preload/**/*",
-		"src/store/**/*",
+		"src/renderer/src/store/**/*",
 		"src/types/**/*"
 	],
 	"compilerOptions": {

@@ -1,5 +1,5 @@
 import Store from 'electron-store'
-import { settings } from '../store/index'
+import { settings } from '../renderer/src/store/index'
 import type { Settings } from '../types/index'
 
 // Store.initRenderer();
