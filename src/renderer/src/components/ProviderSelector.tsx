@@ -1,54 +1,49 @@
-import React from 'react'
-import { useAtom } from 'jotai'
-import { settingsAtom } from '../../../store/index'
+import React from "react";
+import { useAtom } from "jotai";
+import { providersAtom, defaultConfigAtom } from "../../../store/index";
 
 export const ProviderSelector = (): React.JSX.Element => {
-	const [settings, updateSettings] = useAtom(settingsAtom)
+  const [providers] = useAtom(providersAtom);
+  const [defaultConfig, updateDefaultConfig] = useAtom(defaultConfigAtom);
 
-	const handleProviderChange = (
-		e: React.ChangeEvent<HTMLSelectElement>,
-	): void => {
-		const newProviderId = e.target.value
-		const provider = settings.providers.find((p) => p.id === newProviderId)
-		if (!provider) return
-		const firstModel = provider.models[0] || ''
-		const newSettings = {
-			...settings,
-			default: { provider: newProviderId, model: firstModel },
-		}
-		updateSettings(newSettings)
+  const handleProviderChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
+    const newProviderId = e.target.value;
+    const provider = providers.find((p) => p.id === newProviderId);
+    if (!provider) return;
+    const firstModel = provider.models[0] || "";
+    const newDefaultProvider = {
+      provider: newProviderId,
+      model: firstModel,
+    };
 
-		// window.electron.ipcRenderer
-		// 	.invoke('save-settings', newSettings)
-		// 	.then((results) => {
-		// 		console.log({ results })
-		// 	})
-	}
+    updateDefaultConfig(newDefaultProvider);
 
-	return (
-		<>
-			<span>Select Provider:</span>
-			<select
-				value={settings.default.provider}
-				onChange={handleProviderChange}
-				tabIndex={0}
-				aria-label='Select AI Provider'
-				disabled={settings.providers.length === 0}
-				style={{ marginTop: 5 }}
-			>
-				{settings.providers.map((option) => (
-					<option key={option.id} value={option.id}>
-						{option.name}
-					</option>
-				))}
-				{settings.providers.length === 0 && (
-					<option value='' disabled>
-						No providers available
-					</option>
-				)}
-			</select>
-		</>
-	)
-}
+    window.api.changeDefaultProvider(newDefaultProvider).then((results) => {
+      console.log("Default Provider changed:");
+      console.log(results);
+    });
+  };
 
-ProviderSelector.displayName = 'ProviderSelector'
+  return (
+    <>
+      <span>Select Provider:</span>
+      <select
+        value={defaultConfig.provider}
+        onChange={handleProviderChange}
+        tabIndex={0}
+        aria-label="Select AI Provider"
+        style={{ marginTop: 5 }}
+      >
+        {providers.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.name}
+          </option>
+        ))}
+      </select>
+    </>
+  );
+};
+
+ProviderSelector.displayName = "ProviderSelector";

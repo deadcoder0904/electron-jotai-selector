@@ -1,5 +1,10 @@
 import Store from 'electron-store'
-import { defaultSettings } from '../store/index'
-import { Settings } from '../types/index'
+import { settings } from '../store/index'
+import type { Settings } from '../types/index'
 
-const store = new Store<Settings>(defaultSettings)
+// Store.initRenderer();
+export const store = new Store<Settings>({
+	name: 'config',
+	clearInvalidConfig: true,
+	defaults: settings,
+})

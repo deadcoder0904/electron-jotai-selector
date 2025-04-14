@@ -1,36 +1,35 @@
 # electron-jotai-selector
 
-An Electron application with React and TypeScript
+An Electron application with React, TypeScript, Jotai, and Electron Store.
 
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/) +
-  [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) +
-  [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+  [Deno + VSCode](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno)
 
 ## Project Setup
 
 ### Install
 
 ```bash
-$ npm install
+$ bun install
 ```
 
 ### Development
 
 ```bash
-$ npm run dev
+$ bun run dev
 ```
 
 ### Build
 
 ```bash
 # For windows
-$ npm run build:win
+$ bun run build:win
 
 # For macOS
-$ npm run build:mac
+$ bun run build:mac
 
 # For Linux
-$ npm run build:linux
+$ bun run build:linux
 ```
