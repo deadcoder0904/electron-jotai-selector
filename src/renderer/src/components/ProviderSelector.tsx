@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAtom } from 'jotai'
-import { providersAtom, selectionAtom } from '../store/index'
+import { providersAtom, selectionAtom } from '../store/jotai'
 import type { ProviderId } from '../../../types/index'
 
 export const ProviderSelector = (): React.JSX.Element => {

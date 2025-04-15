@@ -2,10 +2,10 @@
 
 import type { Api } from '../../shared/api'
 
-export {};
+export {}
 
 declare global {
-  interface Window {
-    api: Api;
-  }
+	interface Window {
+		api: Api
+	}
 }

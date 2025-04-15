@@ -1,4 +1,4 @@
-import type { Settings as Config } from '../renderer/src/store/index'
+import type { Settings as Config } from '../renderer/src/store/jotai'
 import { api } from '../preload/index'
 
 // ElectronAPI interface exposed through contextBridge

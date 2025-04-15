@@ -3,7 +3,7 @@ import { useSetAtom } from 'jotai'
 
 import { ProviderSelector } from './components/ProviderSelector'
 import { APIKeyInput } from './components/APIKeyInput'
-import { providersAtom, selectionAtom } from './store/index'
+import { providersAtom, selectionAtom } from './store/jotai'
 
 function App(): React.JSX.Element {
 	const setProviders = useSetAtom(providersAtom)

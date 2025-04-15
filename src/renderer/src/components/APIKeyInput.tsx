@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAtom, useAtomValue } from 'jotai'
-import { providersAtom, selectionAtom } from '../store/index'
+import { providersAtom, selectionAtom } from '../store/jotai'
 
 export const APIKeyInput = () => {
 	const [providers, setProviders] = useAtom(providersAtom)
