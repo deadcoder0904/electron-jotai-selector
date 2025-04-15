@@ -53,8 +53,8 @@ app.whenReady().then(() => {
 
 	// IPC test
 	ipcMain.handle('get-config', () => {
-		console.log('get-config', store.get())
-		return store.get()
+		console.log('get-config', (store as any).get())
+		return (store as any).get()
 	})
 
 	ipcMain.handle('change-providers', async (_event, providers) => {

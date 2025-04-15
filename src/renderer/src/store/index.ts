@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import { Settings } from '../types/index'
+import { Settings, Provider, DefaultConfig } from '../../../types/index'
 
 export const settings: Settings = {
 	providers: [
@@ -28,7 +28,7 @@ export const providersAtom = atom(
 	(get) => get(settingsAtom).providers,
 	(get, set, newProviders) => {
 		const currentSettings = get(settingsAtom)
-		set(settingsAtom, { ...currentSettings, providers: newProviders })
+		set(settingsAtom, { ...currentSettings, providers: newProviders as Provider[] })
 	},
 )
 
@@ -36,6 +36,6 @@ export const defaultConfigAtom = atom(
 	(get) => get(settingsAtom).default,
 	(get, set, newDefaultConfig) => {
 		const currentSettings = get(settingsAtom)
-		set(settingsAtom, { ...currentSettings, default: newDefaultConfig })
+		set(settingsAtom, { ...currentSettings, default: newDefaultConfig as DefaultConfig })
 	},
 )
