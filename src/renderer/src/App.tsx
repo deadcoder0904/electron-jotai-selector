@@ -1,19 +1,21 @@
 import React from 'react'
-import { useAtom } from 'jotai'
+import { useSetAtom } from 'jotai'
 
 import { ProviderSelector } from './components/ProviderSelector'
 import { APIKeyInput } from './components/APIKeyInput'
-import { settingsAtom } from './store/index'
+import { providersAtom, selectionAtom } from './store/index'
 
 function App(): React.JSX.Element {
-	const [, updateSettings] = useAtom(settingsAtom)
+	const setProviders = useSetAtom(providersAtom)
+	const setSelection = useSetAtom(selectionAtom)
 
 	React.useEffect(() => {
 		// On first render, pull the real config from the main process
 		window.api.getConfig().then((config) => {
 			console.log('Load default config from config.json:')
 			console.log(JSON.stringify(config, null, 2))
-			updateSettings(config)
+			setProviders(config.providers)
+			setSelection(config.selection)
 		})
 	}, [])
 

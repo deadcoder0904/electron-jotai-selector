@@ -2,17 +2,19 @@ import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 import { ipcRenderer } from 'electron/renderer'
 
-import type { DefaultConfig, Provider, Settings } from '../types/index'
+import type { ProvidersState, SelectionState } from '../types/index'
 
 // Custom APIs for renderer
 export const api = {
-	getConfig: (): Promise<Settings> => ipcRenderer.invoke('get-config'),
-	changeProviders: (providers: Provider[]): Promise<Provider[]> =>
+	getConfig: (): Promise<
+		{ providers: ProvidersState; selection: SelectionState }
+	> => ipcRenderer.invoke('get-config'),
+	changeProviders: (providers: ProvidersState): Promise<ProvidersState> =>
 		ipcRenderer.invoke('change-providers', providers),
 	changeDefaultProvider: (
-		defaultConfig: DefaultConfig,
-	): Promise<DefaultConfig> =>
-		ipcRenderer.invoke('change-default-provider', defaultConfig),
+		selection: SelectionState,
+	): Promise<SelectionState> =>
+		ipcRenderer.invoke('change-default-provider', selection),
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

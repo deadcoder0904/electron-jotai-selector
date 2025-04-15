@@ -1,16 +1,16 @@
+export type ProviderId = 'openai' | 'gemini'
+
 export interface Provider {
-	id: string
+	id: ProviderId
 	name: string
 	models: string[]
 	apiKey: string
 }
 
-export interface DefaultConfig {
-	provider: string
-	model: string
-}
+// ProvidersState as a record type
+export type ProvidersState = Record<ProviderId, Provider>
 
-export interface Settings {
-	providers: Provider[]
-	default: DefaultConfig
+export interface SelectionState {
+	providerId: ProviderId
+	model: string
 }

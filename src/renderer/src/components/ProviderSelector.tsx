@@ -1,26 +1,25 @@
 import React from 'react'
 import { useAtom } from 'jotai'
-import { defaultConfigAtom, providersAtom } from '../store/index'
+import { providersAtom, selectionAtom } from '../store/index'
+import type { ProviderId } from '../../../types/index'
 
 export const ProviderSelector = (): React.JSX.Element => {
 	const [providers] = useAtom(providersAtom)
-	const [defaultConfig, updateDefaultConfig] = useAtom(defaultConfigAtom)
+	const [selection, setSelection] = useAtom(selectionAtom)
 
 	const handleProviderChange = (
 		e: React.ChangeEvent<HTMLSelectElement>,
 	): void => {
-		const newProviderId = e.target.value
-		const provider = providers.find((p) => p.id === newProviderId)
+		const newProviderId = e.target.value as ProviderId
+		const provider = providers[newProviderId]
 		if (!provider) return
 		const firstModel = provider.models[0] || ''
-		const newDefaultProvider = {
-			provider: newProviderId,
+		const newSelection = {
+			providerId: newProviderId,
 			model: firstModel,
 		}
-
-		updateDefaultConfig(newDefaultProvider)
-
-		window.api.changeDefaultProvider(newDefaultProvider).then((results) => {
+		setSelection(newSelection)
+		window.api.changeDefaultProvider(newSelection).then((results: any) => {
 			console.log('Default Provider changed:')
 			console.log(results)
 		})
@@ -30,13 +29,13 @@ export const ProviderSelector = (): React.JSX.Element => {
 		<>
 			<span>Select Provider:</span>
 			<select
-				value={defaultConfig.provider}
+				value={selection.providerId}
 				onChange={handleProviderChange}
 				tabIndex={0}
 				aria-label='Select AI Provider'
 				style={{ marginTop: 5 }}
 			>
-				{providers.map((option) => (
+				{Object.values(providers).map((option) => (
 					<option key={option.id} value={option.id}>
 						{option.name}
 					</option>

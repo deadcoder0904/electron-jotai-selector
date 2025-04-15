@@ -1,16 +1,13 @@
 import React from 'react'
-import { useAtom } from 'jotai'
-import { defaultConfigAtom, providersAtom } from '../store/index'
+import { useAtom, useAtomValue } from 'jotai'
+import { providersAtom, selectionAtom } from '../store/index'
 
 export const APIKeyInput = () => {
-	const [providers, updateProviders] = useAtom(providersAtom)
-	const [defaultConfig, _] = useAtom(defaultConfigAtom)
-	// Get the currently selected provider
-	const selectedProvider = providers.find(
-		(p) => p.id === defaultConfig.provider,
-	)
+	const [providers, setProviders] = useAtom(providersAtom)
+	const selection = useAtomValue(selectionAtom)
+	const selectedProvider = providers[selection.providerId]
 
-	const placeholder = defaultConfig.provider === 'openai'
+	const placeholder = selection.providerId === 'openai'
 		? 'Enter OpenAI API key'
 		: 'Enter Gemini API key'
 
@@ -18,15 +15,15 @@ export const APIKeyInput = () => {
 		e.preventDefault()
 		if (!selectedProvider) return
 
-		const newProviders = providers.map((provider) => {
-			if (provider.id === selectedProvider.id) {
-				return { ...provider, apiKey: e.target.value }
-			}
-			return provider
-		})
-		updateProviders(newProviders)
-
-		window.api.changeProviders(newProviders).then((results) => {
+		const newProviders = {
+			...providers,
+			[selection.providerId]: {
+				...selectedProvider,
+				apiKey: e.target.value,
+			},
+		}
+		setProviders(newProviders)
+		window.api.changeProviders(newProviders).then((results: any) => {
 			console.log('New Providers:')
 			console.log(results)
 		})

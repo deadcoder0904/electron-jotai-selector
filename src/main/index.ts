@@ -2,7 +2,8 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { join } from 'path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { store } from './store'
+import { conf } from './conf'
+import type { ProvidersState, SelectionState } from '../types/index'
 
 function createWindow(): void {
 	// Create the browser window.
@@ -51,23 +52,30 @@ app.whenReady().then(() => {
 		optimizer.watchWindowShortcuts(window)
 	})
 
-	// IPC test
+	// IPC handlers for new state
 	ipcMain.handle('get-config', () => {
-		console.log('get-config', (store as any).get())
-		return (store as any).get()
+		const config = conf.store
+		console.log('get-config', config)
+		return config
 	})
 
-	ipcMain.handle('change-providers', async (_event, providers) => {
-		console.log({ providers })
-		;(store as any).set('providers', providers)
-		return providers
-	})
+	ipcMain.handle(
+		'change-providers',
+		async (_event, providers: ProvidersState) => {
+			console.log({ providers })
+			conf.set('providers', providers)
+			return providers
+		},
+	)
 
-	ipcMain.handle('change-default-provider', async (_event, defaultProvider) => {
-		console.log({ defaultProvider })
-		;(store as any).set('default', defaultProvider)
-		return defaultProvider
-	})
+	ipcMain.handle(
+		'change-default-provider',
+		async (_event, selection: SelectionState) => {
+			console.log({ selection })
+			conf.set('selection', selection)
+			return selection
+		},
+	)
 
 	createWindow()
 
